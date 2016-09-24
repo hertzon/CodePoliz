@@ -66,6 +66,7 @@
             android:hint="Ingrese o escanee el documento"
             android:gravity="center"
             android:cursorVisible="false"
+            android:inputType="number"
             android:layout_marginTop="20dp"
             android:layout_below="@+id/textView2"
             android:layout_alignLeft="@+id/ExpandableListView01"
@@ -119,7 +120,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButton4"
+            android:id="@+id/imageButton_buscar"
             android:background="@drawable/searchpeople"
             android:layout_below="@+id/textView8"
             android:layout_alignLeft="@+id/textView6"
@@ -137,6 +138,8 @@
             android:layout_alignLeft="@+id/ExpandableListView01"
             android:layout_alignStart="@+id/ExpandableListView01"
             android:layout_marginTop="29dp" />
+
+
 
     </RelativeLayout>
 

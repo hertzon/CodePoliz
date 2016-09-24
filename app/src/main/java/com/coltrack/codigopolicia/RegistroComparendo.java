@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -26,6 +27,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.microblink.activity.Pdf417ScanActivity;
 import com.microblink.hardware.camera.CameraType;
@@ -63,6 +66,7 @@ public class RegistroComparendo extends AppCompatActivity {
     HashMap<String, List<String>> listDataChild;
     String tipoDocumento=null;
     ImageButton btn_escanear;
+    ImageButton imageButton_buscar;
 
     String s=null;
     String numeroCedula=null;
@@ -72,6 +76,12 @@ public class RegistroComparendo extends AppCompatActivity {
     String fechaNacimiento=null;
     String tipoSangre=null;
     MediaPlayer mPlayer;
+    String ss="";
+    StringBuilder aux;
+    private String[] campos = new String[30];
+    StringBuilder caracteres;
+    String apellido;
+    String segundoApellido;
 
     EditText editText_cedula;
 
@@ -93,17 +103,46 @@ public class RegistroComparendo extends AppCompatActivity {
         expListView.setAdapter(listAdapter);
         btn_escanear=(ImageButton)findViewById(R.id.button_escanear);
         editText_cedula=(EditText)findViewById(R.id.editText_cedula);
+        imageButton_buscar=(ImageButton)findViewById(R.id.imageButton_buscar);
 
         Log.i(LOG, "BuildVersionString: " + buildVersionString());
+
+        numeroCedula=null;
+        mPlayer = MediaPlayer.create(RegistroComparendo.this, R.raw.beep);
+
+        imageButton_buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPlayer.start();
+                if (!numeroCedula.equals(null) && !TextUtils.isEmpty(editText_cedula.getText().toString())){
+                    Intent i=new Intent(getApplicationContext(),Resultado.class);
+                    //Enviamos parametros al activity Resultado
+                    i.putExtra("nombre",nombre);
+                    i.putExtra("ndocumento",numeroCedula);
+                    i.putExtra("fechanacimiento",fechaNacimiento);
+                    i.putExtra("sexo",sexo);
+                    i.putExtra("tiposangre",tipoSangre);
+
+
+                    startActivity(i);
+                }else {
+                    Toast.makeText(getApplicationContext(),"Ingrese o escanee un documento de identidad valido!!",Toast.LENGTH_SHORT).show();
+                    editText_cedula.setError("Ingrese un numero  valido!!");
+                }
+
+            }
+        });
 
         btn_escanear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPlayer = MediaPlayer.create(RegistroComparendo.this, R.raw.beep);
+
+                mPlayer.start();
+                Toast.makeText(getApplicationContext(), "Abriendo Scanner...", Toast.LENGTH_SHORT).show();
                 // check if PDF417.mobi is supported on the device
                 RecognizerCompatibilityStatus status = RecognizerCompatibility.getRecognizerCompatibilityStatus(getApplicationContext());
                 if (status == RecognizerCompatibilityStatus.RECOGNIZER_SUPPORTED) {
-                    Toast.makeText(getApplicationContext(), "Camara  soportada!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Camara compatible", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Camara no soportada: " + status.name(), Toast.LENGTH_LONG).show();
                 }
@@ -301,16 +340,187 @@ public class RegistroComparendo extends AppCompatActivity {
                 if(res instanceof Pdf417ScanResult) { // check if scan result is result of Pdf417 recognizer
                     Pdf417ScanResult result = (Pdf417ScanResult) res;
                     // getStringData getter will return the string version of barcode contents
-                    String barcodeData = result.getStringData();
-                    //Log.i(LOG,"barcodeData: "+barcodeData);
+                    //String barcodeData = result.getStringData();
+                    //Log.i(LOG,"getStringData: "+barcodeData);
                     // isUncertain getter will tell you if scanned barcode contains some uncertainties
-                    boolean uncertainData = result.isUncertain();
+                    //boolean uncertainData = result.isUncertain();
                     //Log.i(LOG,"uncertainData: "+uncertainData);
                     // getRawData getter will return the raw data information object of barcode contents
                     BarcodeDetailedData rawData = result.getRawData();
-                    //Log.i(LOG, "rawData: " + rawData);
 
 
+                    //byte[] resraw=rawData.getAllData();
+
+                    // BarcodeDetailedData contains information about barcode's binary layout, if you
+                    // are only interested in raw bytes, you can obtain them with getAllData getter
+//                    byte[] rawDataBuffer = rawData.getAllData();
+//                    //Log.i(LOG,"rawDataBuffer: "+rawDataBuffer);
+//
+//
+//                    if (rawDataBuffer != null) {
+//                        //sb.append("\n");
+//                        //sb.append("PDF417 raw data merged:\n");
+//                        sb.append("{");
+//                        for (int i = 0; i < rawDataBuffer.length; ++i) {
+//                            sb.append((int) rawDataBuffer[i] & 0x0FF);
+//                                if (i != rawDataBuffer.length - 1) {
+//                                    sb.append(", ");
+//                                }
+//                        }
+//                    }
+//                    sb.append("}");
+//                    String resultado=sb.toString();
+//                    Log.i(LOG,"Resultado: "+resultado);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//                    Log.i(LOG, "getRawData: " + rawData);
+//                    //Decodificamos el RAW Data:
+//                    String partes[]=rawData.toString().split("\n");
+//                    Log.i(LOG,"Partes: "+partes.length);
+//                    int k=0;
+//                    for (int i=0;i<campos.length;i++){
+//                        campos[i]=null;
+//                    }
+//                    for (int i=0;i<partes.length;i++){
+//                        if (partes[i].contains("Length")){
+//                            partes[i]=partes[i].replaceAll(" ","");//Quitamos espacios
+//                            partes[i]=partes[i].replaceAll("\\}" ,"");
+//                        }
+//                    }
+
+
+
+//                    for (int i=0;i<partes.length;i++){
+//                        if (partes[i].contains("Length")){
+//                            Log.i(LOG, "Parte: " + i + " " + partes[i]);
+//                            //Cortamos en el primer {
+//                            partes[i]=partes[i].replaceAll(" ","");//Quitamos espacios
+//                            String regex = "\\.(.*)\\}";
+//                            partes[i]=partes[i].replaceAll(regex ,"");
+//                            partes[i]=partes[i].replaceAll("\\}" ,"");
+//
+//                            String subpartes[]=partes[i].split("\\{");//Partimos en {
+//                            //Log.i(LOG,"Subparte util: "+subpartes[subpartes.length-1]);
+//                            //Subparte util: 58,89,94,102,105,116,116
+//                            String parteUtil=subpartes[subpartes.length-1];
+//                            String[] partesComas=parteUtil.split(",");
+//                            aux = new StringBuilder();
+//                            for (int j=0;j<partesComas.length;j++){
+//                                //aca tenemos todos los caractertes
+//                                //(char)Integer.parseInt(parts[i]);
+//                                Log.i(LOG,"Partes Comas: "+(char)Integer.parseInt(partesComas[j]));
+//                                //if (!partesComas[j].equals("0")){
+//                                if (!partesComas[j].equals("0")){
+//                                    ss=ss+(char)Integer.parseInt(partesComas[j]);
+//                                    aux.append((char)Integer.parseInt(partesComas[j]));
+//                                }
+//                                    //ss=ss+(char)Integer.parseInt(partesComas[j]);
+//                                    //aux.append((char)Integer.parseInt(partesComas[j]));
+//
+//                                //}
+//
+//                                //Log.i(LOG,"Partes Comas: "+(char)Integer.parseInt(partesComas[j]));
+//                            }
+//                            //Log.i(LOG,"Parte sacada: "+ss);
+//                            String resultado=aux.toString();
+//                            if (!resultado.isEmpty()){
+//                                //Log.i(LOG,"Extract sub"+k+":"+resultado);
+//                                campos[k]=resultado;
+//                                k++;
+//                            }
+//                            aux.delete(0,aux.length());
+//                            ss="";
+//                        }
+//                    }
+//                    int next=100;
+//                    nombre="";
+//                    for (int i=0;i<campos.length-1;i++){
+//                        if (campos[i]!=null) {
+//                            Log.i(LOG, "Campo " + i + ":" + campos[i]);
+//                            if (campos[i].equals("PubDSK_1")) {
+//                                next = i;
+//                                Log.i(LOG, "Next: " + i);
+//                            }
+//                            int index=0;
+//                            if (i == (next + 1)) {
+//                                //Campo Cedula y primer apellido
+//                                Log.i(LOG,"Sacando cedula de: "+campos[i]);
+//                                char[] charArray = campos[i].toCharArray();
+//                                //for (int kk=0;kk<charArray.length;kk++){
+//
+//                                //}
+//                                for (int ji = 0; ji < charArray.length; ji++) {
+//                                    if (!Character.isDigit(charArray[ji])) {
+//                                        Log.i(LOG,"char: "+charArray[ji]);
+//                                        index = ji;
+//                                        Log.i(LOG,"Index primera letra: "+index);
+//                                        break;
+//                                    }
+//
+//                                }if (index>11){
+//                                    numeroCedula=campos[i].substring(index - 10, index);
+//                                    numeroCedula=numeroCedula.replaceFirst("^0+(?!$)", "");
+//                                    Log.i(LOG,"Numero documento: "+numeroCedula);
+//                                    nombre=campos[i].substring(index,campos[i].length());
+//
+//                                }
+//
+//                            }
+//                            if (i==(next+2)){
+//                                nombre=nombre+" "+campos[i];
+//                                //Log.i(LOG,"Nombre: "+" "+nombre);
+//                            }
+//                            if (i==(next+3)){
+//                                nombre=nombre+" "+campos[i];
+//                                //Log.i(LOG,"Nombre: "+" "+nombre);
+//                            }
+//                            if (i==(next+4)){
+//                                //Primer Nombre
+//                                nombre=nombre+" "+campos[i];
+//                                Log.i(LOG,"Nombre: "+" "+nombre);
+//                            }
+//                            if (i==(next+5)){
+//                                //Fecha de nacimiento
+//                                //Primer caracter '0'
+//                                String temp=campos[i].substring(2,10);
+//                                fechaNacimiento=temp.substring(0,4)+"/"+temp.substring(4,6)+"/"+temp.substring(6,8);
+//                                Log.i(LOG,"Fecha Nacimiento: "+" "+fechaNacimiento);
+//                                sexo=campos[i].substring(1,2);
+//                                if (sexo.equals("M")){
+//                                    sexo="Masculino";
+//                                }else if (sexo.equals("F")){
+//                                    sexo="Femenino";
+//                                }else {
+//                                    sexo="Indeterminado";
+//                                }
+//                                Log.i(LOG,"Sexo: "+sexo);
+//                            }
+//                        }
+//                    }
+
+
+                    //Otro algoritmo:
 
 
                     // BarcodeDetailedData contains information about barcode's binary layout, if you
@@ -322,24 +532,27 @@ public class RegistroComparendo extends AppCompatActivity {
                         //sb.append("PDF417 raw data merged:\n");
                         sb.append("{");
                         for (int i = 0; i < rawDataBuffer.length; ++i) {
-                            //sb.append((int) rawDataBuffer[i] & 0x0FF);
-//                            if (i != rawDataBuffer.length - 1) {
-//                                sb.append(", ");
-//                            }
-                            if ((rawDataBuffer[i]& 0x0FF)==0){
-                                sb.append(64);
+
+                            if (((int) rawDataBuffer[i] & 0x0FF)==0){
+                                sb.append("32");
                                 if (i != rawDataBuffer.length - 1) {
-                                    sb.append(", ");
+                                    sb.append(",");
                                 }
                             }else {
                                 sb.append((int) rawDataBuffer[i] & 0x0FF);
                                 if (i != rawDataBuffer.length - 1) {
-                                    sb.append(", ");
+                                    sb.append(",");
                                 }
                             }
+
+
+
+
                         }
                     }
                     sb.append("}");
+
+
                     String resultado=sb.toString();
                     Log.i(LOG,"Resultado: "+resultado);
                     resultado=resultado.replaceAll(" ","");
@@ -349,128 +562,237 @@ public class RegistroComparendo extends AppCompatActivity {
                     Log.i(LOG,"RAw sb:"+resultado);
 
                     String[] parts=resultado.split(",");
-
-
-
-
-                    //Log.i(LOG,"rta: "+s);
-                    Log.i(LOG,"parts length: "+ parts.length);
+                    caracteres = new StringBuilder();
+                    Log.i(LOG,"npartes: "+parts.length);
                     for (int i=0;i<parts.length;i++){
-                        //Log.i(LOG,parts[i]);
+                        //if ((Integer.parseInt(parts[i])>=32 && Integer.parseInt(parts[i])<=127) || Integer.parseInt(parts[i])==209 ){
+                            caracteres.append((char)Integer.parseInt(parts[i]));
+                            //caracteres.append(Character.toString((char)Integer.parseInt(parts[i])));
+                            //caracteres.append(",");
+
                     }
-                    s="";
-                    int i=0;
-                    for (i=0;i<parts.length;i++){
-                        if (parts[i].equals("2")){
-                            break;
+                    String respuesta=caracteres.toString();
+                    respuesta=respuesta.replaceAll("\\p{C}", "?");//remove not printable characters
+                    respuesta=respuesta.replaceAll("\\s+", " ");// remove multiple spaces
+
+                    Log.i(LOG, "Caracteres: " + respuesta);
+
+                    Pattern pattern=Pattern.compile("[0-9]{10}[a-zA-ZñÑ]{2,}");
+                    Matcher matcher=pattern.matcher(respuesta);
+                    if (matcher.find()){
+                        Log.i(LOG,"encontrado: "+matcher.group(0));
+                        Log.i(LOG,"start: "+matcher.start());
+                        respuesta=respuesta.substring(matcher.start(),respuesta.length());
+                        numeroCedula=respuesta.substring(0, 10);
+                        numeroCedula=numeroCedula.replaceFirst("^0+(?!$)", "");
+                        respuesta=respuesta.substring(10, respuesta.length());
+
+                        pattern=Pattern.compile("^[a-zA-ZñÑ]{2,} ");
+                        matcher=pattern.matcher(respuesta);
+                        if (matcher.find()){
+                            apellido=matcher.group(0);
+                            apellido=apellido.substring(0,apellido.length()-1);
+                            Log.i(LOG,"apellido: "+apellido);
+                            respuesta=respuesta.substring(matcher.group(0).length(),respuesta.length());
+
+                            pattern=Pattern.compile("^[a-zA-ZñÑ]{2,} ");
+                            matcher=pattern.matcher(respuesta);
+                            if (matcher.find()){
+                                segundoApellido=matcher.group(0);
+                                segundoApellido=segundoApellido.substring(0, segundoApellido.length() - 1);
+                                Log.i(LOG,"segundo apellido: "+segundoApellido);
+                                respuesta=respuesta.substring(matcher.group(0).length(), respuesta.length());
+
+                                pattern=Pattern.compile("^[a-zA-ZñÑ]+ ");
+                                matcher=pattern.matcher(respuesta);
+                                nombre="";
+                                while (matcher.find()){
+                                    nombre=nombre+matcher.group(0);
+                                    Log.i(LOG,"nombre: "+nombre);
+                                    respuesta=respuesta.substring(matcher.group(0).length(),respuesta.length());
+                                    matcher=pattern.matcher(respuesta);
+                                }
+                                nombre=nombre.substring(0,nombre.length()-1);
+                                Log.i(LOG,"nombre: "+nombre);
+
+
+                                pattern=Pattern.compile("0[MF]{1}[0-9]{8}[0-9]*[ABO]{1,2}. ");
+                                matcher=pattern.matcher(respuesta);
+                                if (matcher.find()){
+                                    sexo=matcher.group(0);
+                                    sexo=sexo.substring(1, 2);
+                                    Log.i(LOG,"Sexo: "+sexo);
+                                    fechaNacimiento=matcher.group(0).substring(2,10);
+                                    fechaNacimiento=fechaNacimiento.substring(0,4)+"/"+fechaNacimiento.substring(4,6)+"/"+fechaNacimiento.substring(6,8);
+                                    Log.i(LOG,"fecha nacimiento: "+fechaNacimiento);
+
+                                    pattern=Pattern.compile("[ABO]{1,2}. $");
+                                    matcher=pattern.matcher(matcher.group(0));
+                                    if (matcher.find()){
+                                        tipoSangre=matcher.group(0);
+                                        tipoSangre=tipoSangre.substring(0,tipoSangre.length()-1);
+                                        Log.i(LOG,"Tipo de sangre: "+tipoSangre);
+                                    }
+
+                                }
+
+                            }
+
+
+
+
                         }
-                        s=s+(char)Integer.parseInt(parts[i]);
                     }
-                    Log.i(LOG,"Recortado en: "+i);
-                    Log.i(LOG,"Respuesta:"+s);
 
-                    String[] parts1 = s.split("@@@@@@@@");
-                    for (i=0;i<parts1.length;i++){
-                        Log.i(LOG,"part "+i+":"+parts1[i]);
-                    }
-                    //En parts1[2] va el primer apellido y cedula
-                    String temp=parts1[2];
-                    if (temp.contains("00")){
-                        String[] parts2=temp.split("00");
-                        Log.i(LOG,"1Cedula y apeliido: "+parts2[1]);
-                        temp=parts2[1];
-                        char[] charArray = temp.toCharArray();
-                        int index=0;
-                        for (i=0;i<charArray.length;i++){
-                            if (Character.isLetter(charArray[i])){
-                                index=i;
-                                break;
-                            }
-                        }
-                        numeroCedula=temp.substring(0,index);
-                        String apellido=temp.substring(index,temp.length());
+                    Log.i(LOG,"Caracteres: "+respuesta);
 
-                        for (i=3;i< parts1.length-1;i++){
-                            //if (parts1[i].startsWith("@")){
-                            if (parts1[i].length()>0){
-                                temp=parts1[i];
-                                temp=temp.replaceAll("@", "");
-                                apellido=apellido+" "+temp;
-                            }
-                        }
-                        temp=parts1[parts1.length-1];
-                        fechaNacimiento=temp.substring(3,11);
-                        fechaNacimiento=fechaNacimiento.substring(0,4)+"/"+fechaNacimiento.substring(4,6)+"/"+fechaNacimiento.substring(6,8);
-                        //editText_fechaNacimiento.setText(fechaNacimiento);
-
-                        charArray = temp.toCharArray();
-                        if (charArray[2]=='M'){
-                            sexo="Masculino";
-                        }else if (charArray[2]=='F'){
-                            sexo="Femenino";
-                        }else {
-                            sexo="Ideterminado";
-                        }
-                        //editText_sexo.setText(sexo);
-
-                        tipoSangre=temp.substring(17, 19);
-                        //editText_timpoSangre.setText(tipoSangre);
-
-                        Log.i(LOG,"Cedula: "+numeroCedula);
-                        Log.i(LOG,"Apellido: "+apellido);
-                        nombre=apellido;
-
-
-                    }else if(temp.contains("@@")){
-                        String[] parts2=temp.split("@@");
-                        Log.i(LOG,"2Cedula y apeliido: "+parts2[1]);
-                        temp=parts2[1];
-                        char[] charArray = temp.toCharArray();
-                        int index=0;
-                        for (i=0;i<charArray.length;i++){
-                            if (Character.isLetter(charArray[i])){
-                                index=i;
-                                break;
-                            }
-                        }
-                        numeroCedula=temp.substring(0, index);
-                        String apellido=temp.substring(index,temp.length());
-
-                        for (i=3;i< parts1.length-1;i++){
-                            //if (parts1[i].startsWith("@")){
-                            if (parts1[i].length()>0){
-                                temp=parts1[i];
-                                temp=temp.replaceAll("@", "");
-                                apellido=apellido+" "+temp;
-                            }
-                        }
-                        temp=parts1[parts1.length-1];
-                        fechaNacimiento=temp.substring(3,11);
-
-                        fechaNacimiento=fechaNacimiento.substring(0,4)+"/"+fechaNacimiento.substring(4,6)+"/"+fechaNacimiento.substring(6,8);
-
-                        //editText_fechaNacimiento.setText(fechaNacimiento);
-                        charArray = temp.toCharArray();
-                        if (charArray[2]=='M'){
-                            sexo="Masculino";
-                        }else if (charArray[2]=='F'){
-                            sexo="Femenino";
-                        }else {
-                            sexo="Ideterminado";
-                        }
-                        //editText_sexo.setText(sexo);
-
-                        tipoSangre=temp.substring(17,19);
-                        //editText_timpoSangre.setText(tipoSangre);
+                    Log.i(LOG,"Cedula: "+numeroCedula);
 
 
 
-                        Log.i(LOG,"Cedula: "+numeroCedula);
-                        Log.i(LOG,"Apellido: "+apellido);
-                        nombre=apellido;
-                    }else {
-                        Log.i(LOG,"Error lectura cedula...");
-                    }
+
+//                    String[] partes=respuesta.split(" ");
+//                    for (int i=0;i<partes.length;i++){
+//                        Log.i(LOG, "Parte:" + i + " " + partes[i]);
+//                        char[] charArray = partes[i].toCharArray();
+//                        if (Character.isDigit(charArray[0]) && Character.isLetter(charArray[charArray.length-1])){
+//                            Log.i(LOG,"Donde esta cedula: "+partes[i]);
+//                            int index=0;
+//                            for (int j=0;j<charArray.length;j++){
+//                                if (Character.isLetter(charArray[j])){
+//                                    index=j;
+//                                    Log.i(LOG,"Caracter donde comienza: "+index);
+//                                }
+//                            }
+//
+//
+//
+//                        }
+//
+//                    }
+//
+//
+//
+//                    //Log.i(LOG,"rta: "+s);
+//                    Log.i(LOG,"parts length: "+ parts.length);
+//                    for (int i=0;i<parts.length;i++){
+//                        //Log.i(LOG,parts[i]);
+//                    }
+//                    s="";
+//                    int i=0;
+//                    for (i=0;i<parts.length;i++){
+//                        if (parts[i].equals("2")){
+//                            break;
+//                        }
+//                        s=s+(char)Integer.parseInt(parts[i]);
+//                    }
+//                    Log.i(LOG,"Recortado en: "+i);
+//                    Log.i(LOG,"Respuesta:"+s);
+//
+//                    String[] parts1 = s.split("@@@@@@@@");
+//                    for (i=0;i<parts1.length;i++){
+//                        Log.i(LOG,"part "+i+":"+parts1[i]);
+//                    }
+//                    //En parts1[2] va el primer apellido y cedula
+//                    String temp=parts1[2];
+//                    if (temp.contains("00")){
+//                        String[] parts2=temp.split("00");
+//                        Log.i(LOG,"1Cedula y apeliido: "+parts2[1]);
+//                        temp=parts2[1];
+//                        char[] charArray = temp.toCharArray();
+//                        int index=0;
+//                        for (i=0;i<charArray.length;i++){
+//                            if (Character.isLetter(charArray[i])){
+//                                index=i;
+//                                break;
+//                            }
+//                        }
+//                        numeroCedula=temp.substring(0,index);
+//                        String apellido=temp.substring(index,temp.length());
+//
+//                        for (i=3;i< parts1.length-1;i++){
+//                            //if (parts1[i].startsWith("@")){
+//                            if (parts1[i].length()>0){
+//                                temp=parts1[i];
+//                                temp=temp.replaceAll("@", "");
+//                                apellido=apellido+" "+temp;
+//                            }
+//                        }
+//                        temp=parts1[parts1.length-1];
+//                        fechaNacimiento=temp.substring(3,11);
+//                        fechaNacimiento=fechaNacimiento.substring(0,4)+"/"+fechaNacimiento.substring(4,6)+"/"+fechaNacimiento.substring(6,8);
+//                        //editText_fechaNacimiento.setText(fechaNacimiento);
+//
+//                        charArray = temp.toCharArray();
+//                        if (charArray[2]=='M'){
+//                            sexo="Masculino";
+//                        }else if (charArray[2]=='F'){
+//                            sexo="Femenino";
+//                        }else {
+//                            sexo="Ideterminado";
+//                        }
+//                        //editText_sexo.setText(sexo);
+//
+//                        tipoSangre=temp.substring(17, 19);
+//                        //editText_timpoSangre.setText(tipoSangre);
+//
+//                        Log.i(LOG,"Cedula: "+numeroCedula);
+//                        Log.i(LOG,"Apellido: "+apellido);
+//                        nombre=apellido;
+//                        editText_cedula.setText(numeroCedula);
+//
+//                    }else if(temp.contains("@@")){
+//                        String[] parts2=temp.split("@@");
+//                        Log.i(LOG,"2Cedula y apeliido: "+parts2[1]);
+//                        temp=parts2[1];
+//                        char[] charArray = temp.toCharArray();
+//                        int index=0;
+//                        for (i=0;i<charArray.length;i++){
+//                            if (Character.isLetter(charArray[i])){
+//                                index=i;
+//                                break;
+//                            }
+//                        }
+//                        numeroCedula=temp.substring(0, index);
+//                        String apellido=temp.substring(index,temp.length());
+//
+//                        for (i=3;i< parts1.length-1;i++){
+//                            //if (parts1[i].startsWith("@")){
+//                            if (parts1[i].length()>0){
+//                                temp=parts1[i];
+//                                temp=temp.replaceAll("@", "");
+//                                apellido=apellido+" "+temp;
+//                            }
+//                        }
+//                        temp=parts1[parts1.length-1];
+//                        fechaNacimiento=temp.substring(3,11);
+//
+//                        fechaNacimiento=fechaNacimiento.substring(0,4)+"/"+fechaNacimiento.substring(4,6)+"/"+fechaNacimiento.substring(6,8);
+//
+//                        //editText_fechaNacimiento.setText(fechaNacimiento);
+//                        charArray = temp.toCharArray();
+//                        if (charArray[2]=='M'){
+//                            sexo="Masculino";
+//                        }else if (charArray[2]=='F'){
+//                            sexo="Femenino";
+//                        }else {
+//                            sexo="Ideterminado";
+//                        }
+//                        //editText_sexo.setText(sexo);
+//
+//                        tipoSangre=temp.substring(17,19);
+//                        //editText_timpoSangre.setText(tipoSangre);
+//
+//
+//
+//                        Log.i(LOG,"Cedula: "+numeroCedula);
+//                        Log.i(LOG,"Apellido: "+apellido);
+//                        nombre=apellido;
+//                        editText_cedula.setText(numeroCedula);
+//                    }else {
+//                        Log.i(LOG,"Error lectura cedula...");
+//                        editText_cedula.setText("Error cedula!!!!");
+//                    }
                     //editText_nombre.setText(nombre);
                     //editText_numeroDocumento.setText(numeroCedula);
 

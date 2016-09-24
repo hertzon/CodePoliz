@@ -32,71 +32,50 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Usuario"
-            android:textSize="24dp"
-            android:id="@+id/textViewUsuario"
-            android:layout_marginTop="20dp"
-            android:textColor="#114d2b"
-            android:layout_below="@+id/imageView"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
             android:id="@+id/textView_usb"
             android:layout_below="@+id/button_ingresar"
-            android:layout_alignLeft="@+id/textViewUsuario"
-            android:layout_alignStart="@+id/textViewUsuario"
-            android:layout_marginTop="45dp" />
+            android:layout_marginTop="45dp"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:layout_width="280dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:text="Ingresar"
             android:id="@+id/button_ingresar"
             android:background="@drawable/roundedbutton"
             android:textColor="#ffffff"
-            android:textSize="24dp"
+            android:textSize="22dp"
             android:layout_marginTop="41dp"
             android:layout_below="@+id/editText_contrasena"
             android:layout_centerHorizontal="true" />
 
         <EditText
             android:layout_width="280dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:id="@+id/editText_contrasena"
             android:hint="Digite su contraseña"
             android:gravity="center"
             android:cursorVisible="false"
             android:background="@drawable/roundeditxt"
-            android:layout_below="@+id/textViewContrasena"
             android:layout_alignLeft="@+id/editText_usuario"
-            android:layout_alignStart="@+id/editText_usuario" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Contraseña"
-            android:layout_marginTop="20dp"
-            android:textSize="24dp"
-            android:id="@+id/textViewContrasena"
-            android:textColor="#114d2b"
+            android:layout_alignStart="@+id/editText_usuario"
             android:layout_below="@+id/editText_usuario"
-            android:layout_centerHorizontal="true" />
+            android:layout_marginTop="20dp" />
 
         <EditText
             android:layout_width="280dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:background="@drawable/roundeditxt"
             android:id="@+id/editText_usuario"
             android:hint="Digite su usuario OID"
             android:gravity="center"
             android:cursorVisible="false"
-            android:layout_below="@+id/textViewUsuario"
             android:layout_alignLeft="@+id/button_ingresar"
-            android:layout_alignStart="@+id/button_ingresar" />
+            android:layout_alignStart="@+id/button_ingresar"
+            android:layout_below="@+id/imageView"
+            android:layout_marginTop="20dp" />
 
         <ImageView
             android:layout_width="180dp"

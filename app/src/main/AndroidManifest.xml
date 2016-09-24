@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".RegistroComparendo"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -25,9 +25,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".LugarFH" />
-        <activity android:name=".RegistroComparendo" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".SplashscreenActivity" />
-        <activity android:name=".Acciones"></activity>
+        <activity android:name=".Acciones" />
+        <activity android:name=".Resultado"></activity>
     </application>
 
 </manifest>

@@ -112,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                Intent i=new Intent(getApplicationContext(),Acciones.class);
+                startActivity(i);
                 mPlayer.start();
 
                 if (TextUtils.isEmpty(editText_usuario.getText().toString())){
@@ -124,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                 if (!isError){
-                    Intent i=new Intent(getApplicationContext(),Acciones.class);
-                    startActivity(i);
+                    //Intent i=new Intent(getApplicationContext(),Acciones.class);
+                    //startActivity(i);
                 }
 
             }
