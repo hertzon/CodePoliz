@@ -16,28 +16,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">
 
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/imageButton4"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/exit"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp" />
-
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/imageButton6"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/back"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,20 +24,304 @@
             android:id="@+id/textView10"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:textSize="28dp"
-            android:textColor="#114D2B"
-            android:layout_marginTop="35dp" />
-
-        <TextView
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Resultado"
-            android:id="@+id/textView_resultado"
             android:textSize="22dp"
             android:textColor="#114D2B"
+            android:layout_marginTop="10dp" />
+
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/imageButton4"
+            android:background="@drawable/back"
+            android:layout_alignTop="@+id/textView10"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp" />
+
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/imageButton6"
+            android:background="@drawable/exit"
+            android:layout_alignTop="@+id/textView10"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Datos Personales"
+            android:id="@+id/textView15"
+            android:textSize="20dp"
+            android:textColor="#114D2B"
             android:layout_below="@+id/textView10"
-            android:layout_marginTop="29dp"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp" />
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gridLayout2"
+            android:layout_below="@+id/gridLayout5"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton_finalizar"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:background="@drawable/finalizar"
+                android:layout_marginRight="50dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Finalizar"
+                android:id="@+id/textView18"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_marginLeft="6dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton_medidas"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:background="@drawable/medidas"
+                android:layout_marginLeft="21dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medidas"
+                android:id="@+id/textView19"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_marginLeft="26dp" />
+        </GridLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView15"
+            android:layout_alignLeft="@+id/imageButton4"
+            android:layout_alignStart="@+id/imageButton4"
+            android:id="@+id/gridLayout3"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre: "
+                android:id="@+id/textView16"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cedula: "
+                android:id="@+id/textView17"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/textView_nombre"
+                android:layout_row="0"
+                android:layout_column="2"
+                android:lines="2"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:maxLines="6"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha de Nacimiento: "
+                android:id="@+id/textView20"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ced"
+                android:id="@+id/textView_cedula"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sexo: "
+                android:id="@+id/textView21"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="nac"
+                android:id="@+id/textView_fechanacimiento"
+                android:layout_row="2"
+                android:layout_column="2"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Grupo Sanguineo: "
+                android:id="@+id/textView22"
+                android:layout_row="4"
+                android:layout_column="0"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="nac"
+                android:id="@+id/textView_sexo"
+                android:layout_row="3"
+                android:layout_column="2"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Direccion GPS: "
+                android:id="@+id/textView23"
+                android:layout_row="5"
+                android:layout_column="0"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="nac"
+                android:id="@+id/textView_grupoSanguineo"
+                android:layout_row="4"
+                android:layout_column="2"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="nac"
+                android:id="@+id/textView_direccion"
+                android:layout_row="5"
+                android:layout_column="2"
+                android:textSize="16dp" />
+        </GridLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Antecedentes"
+            android:id="@+id/textView24"
+            android:textSize="20dp"
+            android:textColor="#114D2B"
+            android:layout_below="@+id/gridLayout3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ANTECEDENTES DIJIN"
+            android:id="@+id/textView25"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:textSize="20dp"
+            android:layout_below="@+id/textView24"
+            android:layout_alignLeft="@+id/gridLayout3"
+            android:layout_alignStart="@+id/gridLayout3"
+            android:layout_marginTop="5dp"
+            android:textColor="#114D2B" />
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView25"
+            android:layout_alignLeft="@+id/textView25"
+            android:layout_alignStart="@+id/textView25"
+            android:id="@+id/gridLayout4">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SI "
+                android:id="@+id/textView26"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:textSize="20dp"
+                android:textColor="#ba2037" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Presenta Antecedentes"
+                android:id="@+id/textView27"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:textSize="20dp" />
+        </GridLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ANTECEDENTES DIJIN"
+            android:id="@+id/textView28"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:textSize="20dp"
+            android:layout_below="@+id/gridLayout4"
+            android:layout_alignLeft="@+id/gridLayout4"
+            android:layout_alignStart="@+id/gridLayout4"
+            android:layout_marginTop="5dp"
+            android:textColor="#114D2B" />
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gridLayout5"
+            android:layout_below="@+id/textView28"
+            android:layout_alignLeft="@+id/textView28"
+            android:layout_alignStart="@+id/textView28">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NO"
+                android:id="@+id/textView29"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:textSize="20dp"
+                android:textColor="#114D2B" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Presenta Antecedentes"
+                android:id="@+id/textView30"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:textSize="20dp" />
+        </GridLayout>
+
     </RelativeLayout>
 </RelativeLayout>

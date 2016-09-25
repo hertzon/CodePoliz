@@ -59,13 +59,17 @@ public class MainActivity extends AppCompatActivity {
     TextView textView_usb;
     MediaPlayer mPlayer;
 
+    String usuario="juan";
+    String password="1234";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.i(LOG,"Arrancando aplicacion....");
         //Escondemos el teclado:
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        editText_contrasena=(EditText)findViewById(R.id.editText_usuario);
+        editText_contrasena=(EditText)findViewById(R.id.editText_contrasena);
         editText_usuario=(EditText)findViewById(R.id.editText_usuario);
         textView_usb=(TextView)findViewById(R.id.textView_usb);
 
@@ -100,7 +104,10 @@ public class MainActivity extends AppCompatActivity {
         if (location!=null){
             Log.i(LOG, "Mostrando ubicacion inicial:");
             mostrarLocalizacion(location);
+        }else {
+            Log.i(LOG,"No hay locacion inicial...");
         }
+
 
 
 
@@ -112,9 +119,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i=new Intent(getApplicationContext(),Acciones.class);
-                startActivity(i);
+                //Intent i=new Intent(getApplicationContext(),Acciones.class);
+                //startActivity(i);
                 mPlayer.start();
+                Log.i(LOG,"Usuario: "+editText_usuario.getText().toString()+" Contraseña: "+editText_contrasena.getText().toString());
 
                 if (TextUtils.isEmpty(editText_usuario.getText().toString())){
                     editText_usuario.setError("Ingrese Usuario!!");
@@ -125,8 +133,17 @@ public class MainActivity extends AppCompatActivity {
 
 
                 if (!isError){
-                    //Intent i=new Intent(getApplicationContext(),Acciones.class);
-                    //startActivity(i);
+                    if (editText_usuario.getText().toString().equals(usuario) && editText_contrasena.getText().toString().equals(password)){
+                        Log.i(LOG,"Abriendo actividad Acciones.class");
+                        Intent i=new Intent(getApplicationContext(),Acciones.class);
+                        startActivity(i);
+                    }else {
+                        Toast.makeText(getApplicationContext(),"Usuario y/o contraseña incorrecta",Toast.LENGTH_LONG).show();
+                        editText_contrasena.setText("");editText_usuario.setText("");
+                    }
+
+                }else {
+
                 }
 
             }
