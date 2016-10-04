@@ -1,4 +1,41 @@
 <resources>
-    <string name="app_name">CodigoPolicia</string>
+    <string name="app_name">Código de Policía</string>
     <string name="UseWith">Use with</string>
+    <string name="agreement">Coltrack 2016</string>
+    <string name="clear_pad">Borrar Pad</string>
+    <string name="save_signature">Guardar Firma</string>
+    <string name="action_settings">Parametros</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="speech_prompt">Hable&#8230;</string>
+    <string name="speech_not_supported">Lo siento su dispositivo no soporte lectura de voz</string>
+    <string name="tap_on_mic">Presione en el microfono para hablar</string>
+
+    <string name="button_personas"><font size="40">&#xe715;</font>\n\<font size="14">Ciudadano</font></string>
+    <string name="button_vehiculos"><font size="40">&#xe029;</font>\n\<font size="14">Vehículos</font></string>
+    <string name="button_tamir"><font size="40">&#xe041;</font>\n\<font size="14">Tamir</font></string>
+    <string name="button_contacto"><font size="40">&#xe619;</font>\n\<font size="14">Contacto</font></string>
+    <string name="button_imeis"><font size="40">&#xe337;</font>\n\<font size="14">IMEIs</font></string>
+    <string name="button_login"><font size="40">&#xe387;</font>\n\<font size="14">Ingresar</font></string>
+    <string name="button_procedimientos"><font size="40">&#xe088;</font>\n\<font size="14">Procedimientos</font></string>
+    <string name="button_codigo"><font size="40">&#xe352;</font>\n\<font size="14">Leer Código</font></string>
+    <string name="button_salir"><font size="40">&#xe388;</font>\n\<font size="14">Salir</font></string>
+    <string name="button_escanear"><font size="40">&#xe260;</font>\n\<font size="14">Escanear</font></string>
+    <string name="button_atras"><font size="40">&#xe217;</font>\n\<font size="14">Atrás</font></string>
+    <string name="button_buscar"><font size="40">&#xe028;</font>\n\<font size="14">Buscar</font></string>
+    <string name="button_mic"><font size="40">&#xe301;</font>\n\<font size="14">Dictar</font></string>
+    <string name="button_dijin"><font size="40">&#xe079;</font>\n\<font size="14">Presenta Antecedentes\n DIJIN</font></string>
+    <string name="button_interpol"><font size="40">&#xe199;</font>\n\<font size="14">Sin antecedentes\n INTERPOL</font></string>
+    <string name="button_finalizar"><font size="40">&#xe021;</font>\n\<font size="14">Inicio</font></string>
+    <string name="button_medidas"><font size="40">&#xe199;</font>\n\<font size="14">Medidas</font></string>
+    <string name="button_agregarconducta"><font size="40">&#xe191;</font>\n\<font size="14">Conducta</font></string>
+    <string name="button_siguiente"><font size="40">&#xe218;</font>\n\<font size="14">Siguiente</font></string>
+    <string name="button_foto"><font size="30">&#xe012;</font>\n\<font size="10">Foto</font></string>
+    <string name="button_mic_small"><font size="18">&#xe301;</font></string>
+    <string name="button_firma_small"><font size="30">&#xe236;</font>\n\<font size="10">Firma</font></string>
+    <string name="button_escanear_small"><font size="30">&#xe260;</font>\n\<font size="10">Escanear</font></string>
+    <string name="button_enviar"><font size="40">&#xe422;</font>\n\<font size="14">Enviar</font></string>
+    <string name="button_establecimiento"><font size="40">&#xe090;</font>\n\<font size="14">Agregar</font></string>
+
+
+
 </resources>

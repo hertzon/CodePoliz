@@ -13,31 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/layout_bg">
-
-        <ImageButton
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:id="@+id/imageButton8"
-            android:background="@drawable/exit"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp" />
-
-        <ImageButton
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:id="@+id/imageButton7"
-            android:background="@drawable/back"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp" />
+        android:layout_alignParentStart="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -47,17 +25,15 @@
             android:id="@+id/textView32"
             android:textSize="22dp"
             android:textColor="#114D2B"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp" />
+            android:layout_alignTop="@+id/imageButton_salir"
+            android:layout_centerHorizontal="true" />
 
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/imageButton_descargarCodigo"
-            android:layout_marginBottom="73dp"
             android:background="@drawable/download"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/textView33"
             android:layout_centerHorizontal="true" />
 
         <TextView
@@ -65,8 +41,29 @@
             android:layout_height="wrap_content"
             android:text="Descargar Codigo"
             android:id="@+id/textView33"
-            android:layout_marginBottom="43dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView"
+            android:choiceMode="singleChoice"
+            android:layout_below="@+id/txtsearch"
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="3dp" />
+
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:id="@+id/txtsearch"
+            android:background="@drawable/roundeditxt"
+            android:hint="Ingrese Texto busqueda"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+
     </RelativeLayout>
 </RelativeLayout>

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
@@ -15,10 +16,12 @@ import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -26,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.Typeface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,11 +46,16 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.text.TextPaint;
+import android.text.style.TypefaceSpan;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText editText_usuario;
     EditText editText_contrasena;
-    Button button_ingresar;
+
     Boolean isError=false;
     LocationManager locationManager;
     AlertDialog alert = null;
@@ -58,28 +67,59 @@ public class MainActivity extends AppCompatActivity {
     String usbDevicesInfo=null;
     TextView textView_usb;
     MediaPlayer mPlayer;
+    TextView button_ingresar;
 
-    String usuario="juan";
+
+
+    String usuario="tcarboleda";
     String password="1234";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.i(LOG,"Arrancando aplicacion....");
+        Log.i(LOG, "Arrancando aplicacion....");
         //Escondemos el teclado:
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         editText_contrasena=(EditText)findViewById(R.id.editText_contrasena);
         editText_usuario=(EditText)findViewById(R.id.editText_usuario);
         textView_usb=(TextView)findViewById(R.id.textView_usb);
 
-        button_ingresar=(Button)findViewById(R.id.button_ingresar);
+
+        button_ingresar=(TextView) findViewById(R.id.textView_login);
         //getSupportActionBar().setTitle("Código Nacional de Policía y Convivencia");
+        textView_usb.setVisibility(View.INVISIBLE);
+        Typeface font = Typeface.createFromAsset(getAssets(), "glyphicons-regular.ttf");
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setLogo(R.drawable.ic_launcher);
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+
+        button_ingresar.setTypeface(font);
 
 
         checkInfo();
         textView_usb.setText(usbDevicesInfo);
 
+
+//        editText_usuario.setOnKeyListener(new View.OnKeyListener() {
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (keyCode == 66) {
+//                    editText_contrasena.requestFocus();
+//                }
+//                return false;
+//            }
+//        });
+//
+//        editText_contrasena.setOnKeyListener(new View.OnKeyListener() {
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if(keyCode == 66) {
+//                    button_ingresar.requestFocus();
+//                }
+//                return false;
+//            }
+//        });
 
 
         ////////////////////////////////////////////////////////////////////////////////
@@ -107,18 +147,11 @@ public class MainActivity extends AppCompatActivity {
         }else {
             Log.i(LOG,"No hay locacion inicial...");
         }
-
-
-
-
         mPlayer = MediaPlayer.create(MainActivity.this, R.raw.beep);
-
-
         ////////////////////////////////////////////////////////////////////////////////
         button_ingresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //Intent i=new Intent(getApplicationContext(),Acciones.class);
                 //startActivity(i);
                 mPlayer.start();
@@ -130,8 +163,6 @@ public class MainActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(editText_contrasena.getText().toString())){
                     editText_contrasena.setError("Ingrese Contraseña!!");
                 }
-
-
                 if (!isError){
                     if (editText_usuario.getText().toString().equals(usuario) && editText_contrasena.getText().toString().equals(password)){
                         Log.i(LOG,"Abriendo actividad Acciones.class");
@@ -149,10 +180,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
     }
+
+
     private void checkInfo() {
         UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
         HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
@@ -171,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
                     "VendorID: " + device.getVendorId() + "\n" +
                     "ProductID: " + device.getProductId() + "\n";
         }
-
         usbDevicesInfo=i;
     }
     private String translateDeviceClass(int deviceClass){
@@ -211,7 +240,6 @@ public class MainActivity extends AppCompatActivity {
             case UsbConstants.USB_CLASS_WIRELESS_CONTROLLER:
                 return "USB class for wireless controller devices";
             default: return "Unknown USB class!";
-
         }
     }
     private void AlertNoGPS() {
@@ -236,8 +264,6 @@ public class MainActivity extends AppCompatActivity {
             ObtenerWebServiceGoogleMaps hiloconexion=new ObtenerWebServiceGoogleMaps();
             hiloconexion.execute(String.valueOf(loc.getLatitude()),String.valueOf(loc.getLongitude()));
         }
-
-
     }
     public class ObtenerWebServiceGoogleMaps extends AsyncTask<String,Integer,String> {
         @Override
@@ -246,9 +272,7 @@ public class MainActivity extends AppCompatActivity {
             String cadena="http://maps.googleapis.com/maps/api/geocode/json?latlng=";
             //cadena=cadena+params[0]+","+params[1]+"&key=AIzaSyCSzohGT6qwwNt5L-KvzGlk26AQgnnrd_U";
             cadena=cadena+params[0]+","+params[1]+"&sensor=none";
-            Log.i(LOG,"Cadena: "+cadena);
-
-
+            //Log.i(LOG,"Cadena: "+cadena);
             try {
                 URL url = new URL(cadena);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection(); //Abrir la conexión
@@ -260,10 +284,7 @@ public class MainActivity extends AppCompatActivity {
                 StringBuilder result = new StringBuilder();
 
                 if (respuesta == HttpURLConnection.HTTP_OK){
-
-
                     InputStream in = new BufferedInputStream(connection.getInputStream());  // preparo la cadena de entrada
-
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));  // la introduzco en un BufferedReader
 
                     // El siguiente proceso lo hago porque el JSONOBject necesita un String y tengo
@@ -290,8 +311,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(LOG,"Respuesta Direccion: "+direccion);
                 }
 
-
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -299,8 +318,6 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
             return devuelve;
         }
 
@@ -326,6 +343,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        editText_usuario.setText("");
+        editText_contrasena.setText("");
         if (locationListener!=null){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -339,10 +358,6 @@ public class MainActivity extends AppCompatActivity {
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
             }
         }
-
-
-
-
     }
     @Override
     protected void onPause() {
@@ -361,7 +376,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-
-
     }
+
 }

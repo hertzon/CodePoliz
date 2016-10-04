@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '24.0.2'
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
@@ -22,13 +22,18 @@ android {
 
 repositories {
     maven { url 'http://maven.microblink.com' }
+    mavenCentral()
 }
 
 dependencies {
     //compile fileTree(dir: 'libs', include: ['*.jar'])
     //testCompile 'junit:junit:4.12'
     //compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'net.danlew:android.joda:2.9.4.1'
     compile('com.microblink:pdf417.mobi:5.5.2@aar') {
         transitive = true
     }
+    compile 'com.github.gcacace:signature-pad:1.2.0'
+
+
 }

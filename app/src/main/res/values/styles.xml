@@ -1,12 +1,21 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowNoTitle">true</item>
-        <item name="colorPrimary">#3e7626</item>
+        <item name="colorPrimary">#017E44</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">#FFC107</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <!-- Used for the background -->
+        <item name="android:background">#017E44</item>
     </style>
 
 

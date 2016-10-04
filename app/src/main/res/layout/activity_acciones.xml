@@ -12,183 +12,124 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/layout_bg"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-
-        <ImageButton
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:id="@+id/imageButton3"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/exit"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp" />
-
-        <ImageButton
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:id="@+id/imageButton5"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/back"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Opciones"
-            android:id="@+id/textView3"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textSize="28dp"
-            android:textColor="#114D2B"
-            android:layout_marginTop="10dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/imageButton3"
+            android:layout_below="@+id/imageButton_salir"
             android:id="@+id/gridLayout"
             android:layout_centerHorizontal="true">
 
-            <ImageButton
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+            <TextView
                 android:id="@+id/imgbtn_personas"
+                android:text="@string/button_personas"
+                android:gravity="center"
+                android:background="@drawable/buttonshape"
+                android:textColor="#FFFFFF"
                 android:layout_row="0"
                 android:layout_column="0"
-                android:background="@drawable/personasok"
-                android:layout_marginRight="20dp" />
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
 
-            <ImageButton
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+            <TextView
+
                 android:id="@+id/imgbtn_tamir"
+                android:text="@string/button_tamir"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
                 android:layout_row="2"
                 android:layout_column="0"
-                android:background="@drawable/tamirok"
-                android:layout_marginTop="20dp" />
+                android:background="@drawable/buttonshape"
+                android:layout_marginTop="20dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
 
-            <ImageButton
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="@string/button_vehiculos"
                 android:id="@+id/imgbtn_vehiculos"
+                android:gravity="center"
                 android:layout_row="0"
+                android:textColor="#FFFFFF"
                 android:layout_column="1"
-                android:background="@drawable/vehiculos"
+                android:background="@drawable/buttonshape"
                 android:layout_margin="0dp"
-                android:layout_marginLeft="20dp" />
+                android:layout_marginLeft="50dp" />
+
+
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Contacto Ciudadano"
-                android:id="@+id/textView11"
-                android:layout_row="3"
-                android:layout_column="1" />
-
-            <ImageButton
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:id="@+id/imgbtn_imeis"
+                android:text="@string/button_imeis"
                 android:layout_row="4"
+                android:textColor="#FFFFFF"
                 android:layout_column="0"
-                android:background="@drawable/imeisok"
+                android:gravity="center"
+                android:background="@drawable/buttonshape"
+                android:layout_marginTop="20dp" />
+
+
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/imgbtn_contacto"
+                android:text="@string/button_contacto"
+                android:layout_row="2"
+                android:textColor="#FFFFFF"
+                android:layout_column="1"
+                android:gravity="center"
+                android:background="@drawable/buttonshape"
+                android:layout_marginLeft="50dp"
                 android:layout_marginTop="20dp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Personas"
-                android:id="@+id/textView"
-                android:layout_row="1"
-                android:layout_column="0"
-                android:layout_marginLeft="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tamir"
-                android:id="@+id/textView7"
-                android:layout_row="3"
-                android:layout_column="0"
-                android:layout_marginLeft="22dp" />
-
-            <ImageButton
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:id="@+id/imgbtn_contacto"
-                android:layout_row="2"
-                android:layout_column="1"
-                android:background="@drawable/contactociudadanok"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="IMEI&apos;S"
-                android:id="@+id/textView12"
-                android:layout_row="5"
-                android:layout_column="0"
-                android:layout_marginLeft="20dp" />
-
-            <ImageButton
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:id="@+id/imgbtn_procedimientos"
+                android:text="@string/button_procedimientos"
                 android:layout_row="4"
+                android:textColor="#FFFFFF"
                 android:layout_column="1"
-                android:background="@drawable/procedimientosok"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp" />
+                android:gravity="center"
+                android:background="@drawable/buttonshape"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Procedimientos"
-                android:id="@+id/textView14"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/imgbtn_codigo"
+                android:text="@string/button_codigo"
                 android:layout_row="5"
+                android:textColor="#FFFFFF"
+                android:layout_column="0"
+                android:gravity="center"
+                android:background="@drawable/buttonshape"
+                android:layout_marginTop="20dp" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/imgbtn_salir"
+                android:text="@string/button_salir"
+                android:layout_row="5"
+                android:textColor="#FFFFFF"
                 android:layout_column="1"
-                android:layout_marginLeft="11dp" />
+                android:gravity="center"
+                android:background="@drawable/buttonshape"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp" />
+
+
+
         </GridLayout>
-
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="80dp"
-            android:id="@+id/imageView2"
-            android:background="@drawable/agente"
-            android:layout_below="@+id/gridLayout"
-            android:layout_alignLeft="@+id/imageButton5"
-            android:layout_alignStart="@+id/imageButton5"
-            android:layout_marginTop="30dp" />
-
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/imgbtn_codigo"
-            android:background="@drawable/codigoazul"
-            android:layout_alignTop="@+id/imageView2"
-            android:layout_alignRight="@+id/imageButton3"
-            android:layout_alignEnd="@+id/imageButton3"
-            android:layout_marginRight="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Codigo"
-            android:id="@+id/textView31"
-            android:layout_below="@+id/imgbtn_codigo"
-            android:layout_alignRight="@+id/imageButton3"
-            android:layout_alignEnd="@+id/imageButton3"
-            android:layout_marginRight="25dp" />
 
     </RelativeLayout>
 </RelativeLayout>

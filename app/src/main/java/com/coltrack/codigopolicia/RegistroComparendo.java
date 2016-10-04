@@ -1,20 +1,18 @@
 package com.coltrack.codigopolicia;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
-import android.net.Uri;
+import android.speech.RecognizerIntent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -22,11 +20,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,8 +62,10 @@ public class RegistroComparendo extends AppCompatActivity {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     String tipoDocumento=null;
-    ImageButton btn_escanear;
-    ImageButton imageButton_buscar;
+    TextView btn_escanear;
+    TextView imageButton_buscar;
+    TextView button_atras;
+    TextView mic;
 
     String s=null;
     String numeroCedula=null;
@@ -82,9 +81,13 @@ public class RegistroComparendo extends AppCompatActivity {
     StringBuilder caracteres;
     String apellido;
     String segundoApellido;
+    private final int REQ_CODE_SPEECH_INPUT = 100;
 
     EditText editText_cedula;
-    TextView textView_resutado;
+
+
+
+
 
 
     @Override
@@ -93,7 +96,7 @@ public class RegistroComparendo extends AppCompatActivity {
         setContentView(R.layout.activity_registro_comparendo);
 
 
-        //getSupportActionBar().setTitle("Orden de comparendo y medidas correctivas");
+
 
         tipoDocumento="Cedula de Ciudadania";
         // get the listview
@@ -102,21 +105,53 @@ public class RegistroComparendo extends AppCompatActivity {
         prepareListData();
         listAdapter=new com.coltrack.codigopolicia.ExpandableListAdapter(this, listDataHeader, listDataChild);
         expListView.setAdapter(listAdapter);
-        btn_escanear=(ImageButton)findViewById(R.id.button_escanear);
+        btn_escanear=(TextView)findViewById(R.id.button_escanear);
         editText_cedula=(EditText)findViewById(R.id.editText_cedula);
-        imageButton_buscar=(ImageButton)findViewById(R.id.imageButton_buscar);
-        textView_resutado=(TextView)findViewById(R.id.textView_resultado);
+        imageButton_buscar=(TextView) findViewById(R.id.imageButton_buscar);
+        button_atras=(TextView)findViewById(R.id.button_atras);
+        mic=(TextView)findViewById(R.id.mic) ;
+
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "glyphicons-regular.ttf");
+
+        btn_escanear.setTypeface(font);
+        imageButton_buscar.setTypeface(font);
+        button_atras.setTypeface(font);
+        mic.setTypeface(font);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setLogo(R.drawable.ic_launcher);
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setTitle("Consultar Persona");
 
         Log.i(LOG, "BuildVersionString: " + buildVersionString());
 
         numeroCedula=null;
         mPlayer = MediaPlayer.create(RegistroComparendo.this, R.raw.beep);
 
+        mic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPlayer.start();
+                promptSpeechInput();
+            }
+        });
+
+
+        button_atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPlayer.start();
+                finish();
+            }
+        });
+
         imageButton_buscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPlayer.start();
-                if (!TextUtils.isEmpty(editText_cedula.getText().toString())){
+                if (!TextUtils.isEmpty(editText_cedula.getText().toString()) && numeroCedula!=null){
                     Intent i=new Intent(getApplicationContext(),Resultado.class);
                     //Enviamos parametros al activity Resultado
                     i.putExtra("nombre",nombre+"\n"+apellido+" "+segundoApellido);
@@ -125,8 +160,10 @@ public class RegistroComparendo extends AppCompatActivity {
                     i.putExtra("sexo",sexo);
                     i.putExtra("tiposangre",tipoSangre);
 
-
                     startActivity(i);
+
+
+
                 }else {
                     Toast.makeText(getApplicationContext(),"Ingrese o escanee un documento de identidad valido!!",Toast.LENGTH_SHORT).show();
                     //editText_cedula.setError("Ingrese un numero  valido!!");
@@ -138,7 +175,6 @@ public class RegistroComparendo extends AppCompatActivity {
         btn_escanear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mPlayer.start();
                 //t.makeText(getApplicationContext(), "Abriendo Scanner...", Toast.LENGTH_SHORT).show();
                 // check if PDF417.mobi is supported on the device
@@ -306,6 +342,22 @@ public class RegistroComparendo extends AppCompatActivity {
         });
     }
 
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                getString(R.string.speech_prompt));
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.speech_not_supported),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private RecognizerSettings[] setupSettingsArray() {
         Pdf417RecognizerSettings sett = new Pdf417RecognizerSettings();
@@ -324,6 +376,24 @@ public class RegistroComparendo extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    editText_cedula.setText(result.get(0));
+                    String temp=editText_cedula.getText().toString();
+                    temp=temp.replaceAll("[^\\d]", "");//This will remove all the non-numeric characters
+                    editText_cedula.setText(temp);
+                }
+                break;
+            }
+        }
+
+
+
         if (requestCode == MY_REQUEST_CODE && resultCode == Pdf417ScanActivity.RESULT_OK) {
             Log.i(LOG,"En onActivityResult");
             // First, obtain recognition result
@@ -349,15 +419,10 @@ public class RegistroComparendo extends AppCompatActivity {
                     //Log.i(LOG,"uncertainData: "+uncertainData);
                     // getRawData getter will return the raw data information object of barcode contents
                     BarcodeDetailedData rawData = result.getRawData();
-
-
-                    //Otro algoritmo:
-
-
                     // BarcodeDetailedData contains information about barcode's binary layout, if you
                     // are only interested in raw bytes, you can obtain them with getAllData getter
                     byte[] rawDataBuffer = rawData.getAllData();
-                    //Log.i(LOG,"rawDataBuffer: "+rawDataBuffer);
+                    Log.i(LOG,"Longitud rawDataBuffer: "+rawDataBuffer.length);
                     if (rawDataBuffer != null) {
                         //sb.append("\n");
                         //sb.append("PDF417 raw data merged:\n");
@@ -375,14 +440,9 @@ public class RegistroComparendo extends AppCompatActivity {
                                     sb.append(",");
                                 }
                             }
-
-
-
-
                         }
                     }
                     sb.append("}");
-
 
                     String resultado=sb.toString();
                     Log.i(LOG,"Resultado: "+resultado);
@@ -400,7 +460,6 @@ public class RegistroComparendo extends AppCompatActivity {
                             caracteres.append((char)Integer.parseInt(parts[i]));
                             //caracteres.append(Character.toString((char)Integer.parseInt(parts[i])));
                             //caracteres.append(",");
-
                     }
                     String respuesta=caracteres.toString();
                     respuesta=respuesta.replaceAll("\\p{C}", "?");//remove not printable characters
@@ -446,7 +505,6 @@ public class RegistroComparendo extends AppCompatActivity {
                                 nombre=nombre.substring(0,nombre.length()-1);
                                 Log.i(LOG,"nombre: "+nombre);
 
-
                                 pattern=Pattern.compile("0[MF]{1}[0-9]{8}[0-9]*[ABO]{1,2}. ");
                                 matcher=pattern.matcher(respuesta);
                                 if (matcher.find()){
@@ -464,14 +522,8 @@ public class RegistroComparendo extends AppCompatActivity {
                                         tipoSangre=tipoSangre.substring(0,tipoSangre.length()-1);
                                         Log.i(LOG,"Tipo de sangre: "+tipoSangre);
                                     }
-
                                 }
-
                             }
-
-
-
-
                         }
                     }
                     editText_cedula.setText(numeroCedula);
@@ -481,37 +533,19 @@ public class RegistroComparendo extends AppCompatActivity {
                     stringb.append("SEXO: "+sexo+"\n");
                     stringb.append("FECHA DE NACIMIENTO: "+fechaNacimiento+"\n");
                     stringb.append("GRUPO SANGUINEO: "+tipoSangre+"\n");
-                    textView_resutado.setText(stringb.toString());
+                    //textView_resutado.setText(stringb.toString());
+
+                    Intent j=new Intent(new Intent(RegistroComparendo.this,Resultado.class));
+                    //Enviamos parametros al activity Resultado
+                    j.putExtra("nombre",nombre+"\n"+apellido+" "+segundoApellido);
+                    j.putExtra("ndocumento",numeroCedula);
+                    j.putExtra("fechanacimiento",fechaNacimiento);
+                    j.putExtra("sexo",sexo);
+                    j.putExtra("tiposangre",tipoSangre);
+                    startActivity(j);
 
 
 
-                    if (false){
-                        return;
-                    } else {
-                        // add data to string builder
-//                        sb.append("PDF417 scan data");
-//                        if (uncertainData) {
-//                            sb.append("This scan data is uncertain!\n\n");
-//                        }
-//                        sb.append(" string data:\n");
-//                        sb.append(barcodeData);
-//                        if (rawData != null) {
-//                            sb.append("\n\n");
-//                            sb.append("PDF417 raw data:\n");
-//                            sb.append(rawData.toString());
-//                            sb.append("\n");
-//                            sb.append("PDF417 raw data merged:\n");
-//                            sb.append("{");
-//                            for (int i = 0; i < rawDataBuffer.length; ++i) {
-//                                sb.append((int) rawDataBuffer[i] & 0x0FF);
-//                                if (i != rawDataBuffer.length - 1) {
-//                                    sb.append(", ");
-//                                }
-//                            }
-//                            sb.append("}\n\n\n");
-//                        }
-                    }
-                    //Log.i(LOG,"RAW: "+sb.toString());
                 } else if(res instanceof BarDecoderScanResult) { // check if scan result is result of BarDecoder recognizer
                     Log.i(LOG,"Is barcode");
                     BarDecoderScanResult result = (BarDecoderScanResult) res;
@@ -559,10 +593,10 @@ public class RegistroComparendo extends AppCompatActivity {
                 }
             }
 
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
-            startActivity(Intent.createChooser(intent, getString(R.string.UseWith)));
+            //Intent intent = new Intent(Intent.ACTION_SEND);
+            //intent.setType("text/plain");
+            //intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+            //startActivity(Intent.createChooser(intent, getString(R.string.UseWith)));
         }
     }
 
